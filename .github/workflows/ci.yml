@@ -36,3 +36,7 @@ jobs:
 
       - name: Test release governance
         run: python -B -m unittest discover -s tests -p "test_release_*.py"
+
+      - name: Test installer maintenance with Windows PowerShell 5.1
+        shell: powershell
+        run: ./tests/installer-maintenance.Tests.ps1 -WorkRoot "$env:RUNNER_TEMP\CutTheSaveInstallerTests"

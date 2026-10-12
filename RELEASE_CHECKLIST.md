@@ -49,7 +49,7 @@ The publish command below creates a candidate only. It does not update the curre
 - [x] Record SHA-256 for every local release asset.
 - [x] Add release notes and known issues.
 - [ ] Verify website and GitHub copies byte-for-byte if both are used.
-- [x] Distributable archive name and text scans contain no private paths, account information, or real user save files.
+- [x] Distributable archive name and text scans contain no private paths, account information, or unapproved user save files. The two reviewed example pairs under `samples/` are intentional distribution content.
 - [x] Signed update manifests are verified before parsing or downloading any executable; detached signatures support the documented Base64 form and raw-byte compatibility form.
 
 ## Update module gates

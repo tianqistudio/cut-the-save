@@ -49,7 +49,15 @@ try {
             'tests/CutTheSave.App.Tests'
         )
         foreach ($testProject in $testProjects) {
-            dotnet run --project $testProject --configuration $Configuration --no-build --artifacts-path $buildArtifacts -p:ReleaseVersion=$ReleaseVersion -- --isolated
+            # Execute this build directly; dotnet run --no-build can resolve an
+            # older assembly from the project's default bin directory.
+            $testName = Split-Path -Leaf $testProject
+            $testAssembly = Join-Path $buildArtifacts "bin/$testName/$($Configuration.ToLowerInvariant())/$testName.dll"
+            if (-not (Test-Path -LiteralPath $testAssembly -PathType Leaf)) {
+                throw "Test output is missing from this build: $testAssembly"
+            }
+            Write-Host "Testing: $testAssembly --isolated"
+            dotnet $testAssembly --isolated
             if ($LASTEXITCODE -ne 0) { throw "Test failed: $testProject" }
         }
     }

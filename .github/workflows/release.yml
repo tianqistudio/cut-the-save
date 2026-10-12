@@ -25,7 +25,10 @@ jobs:
         shell: pwsh
         run: |
           if ($env:GITHUB_REF_TYPE -eq 'tag') {
-            ./scripts/Publish-CutTheSave.ps1 -ReleaseVersion $env:GITHUB_REF_NAME.Substring(1) -RunUpdaterAcceptance
+            if ($env:GITHUB_REF_NAME -notmatch '^v([0-9]+\.[0-9]+\.[0-9]+)(?:-[0-9A-Za-z.-]+)?$') {
+              throw 'Release tags must use vMAJOR.MINOR.PATCH with an optional prerelease suffix.'
+            }
+            ./scripts/Publish-CutTheSave.ps1 -ReleaseVersion $Matches[1] -RunUpdaterAcceptance
           } else {
             ./scripts/Publish-CutTheSave.ps1 -RunUpdaterAcceptance
           }

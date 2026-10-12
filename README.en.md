@@ -6,6 +6,8 @@ Cut the Save checks and edits Steam *Cut the Rope* saves and assists with high-r
 
 This is a development candidate, not a confirmed release. Local tests and package verification do not replace real-save, RTSS or Windows 10/11 field acceptance. Production update trust and official RTSS download metadata are not provisioned.
 
+Download the Windows x64 installer and SHA-256 checksum from the [preview release](https://github.com/tianqistudio/cut-the-save/releases/tag/v1.0.1-preview.20261013). The installer includes the runtime and save examples, with separate desktop and Start Menu shortcut options. It is unsigned; installation, upgrade and uninstallation on a real machine have not been validated. See the [installation guide](docs/installer.md).
+
 Open a save, inspect its validation status, edit the in-memory draft and use **Save as**. Unrecognized or warning-bearing saves remain read-only. Save and restore require the game to be closed. Backups are verified before recovery; unresolved or external changes stop automatic writes.
 
 RTSS operations target only `CutTheRopeApp.exe`. The repair records its intent before writing, then binds the verified resulting Profile. Undo refuses changed Profiles, changed backups and unverifiable legacy/interrupted records. Preserve their files for review.
