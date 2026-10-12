@@ -1,0 +1,6 @@
+[Update]
+Enabled=false
+; Only the update-check preference is editable here; restart to apply.
+; Public key, key ID, channel, HTTPS hosts and both source URLs are compiled.
+; Enabled=true cannot provision or enable an unconfigured development build.
+; Never place a private signing key in an INI, application folder or repository.

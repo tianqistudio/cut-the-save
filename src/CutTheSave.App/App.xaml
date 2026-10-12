@@ -1,0 +1,36 @@
+<Application x:Class="CutTheSave.App.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             ThemeMode="Light">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Common.xaml" />
+                <ResourceDictionary Source="Themes/Win11.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        <!-- Windows 11 light is the no-settings startup palette. AppearanceService replaces these at runtime. -->
+        <SolidColorBrush x:Key="PageBackgroundBrush" Color="#F3F3F3" />
+        <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FBFBFB" />
+        <SolidColorBrush x:Key="ControlBackgroundBrush" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="ControlHoverBrush" Color="#F6F6F6" />
+        <SolidColorBrush x:Key="ControlPressedBrush" Color="#EDEDED" />
+        <SolidColorBrush x:Key="ControlDisabledBrush" Color="#F0F0F0" />
+        <SolidColorBrush x:Key="PrimaryBrush" Color="#0067C0" />
+        <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#1975C5" />
+        <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#00589F" />
+        <SolidColorBrush x:Key="PrimaryForegroundBrush" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="TextBrush" Color="#1A1A1A" />
+        <SolidColorBrush x:Key="SecondaryTextBrush" Color="#5D5D5D" />
+        <SolidColorBrush x:Key="DisabledTextBrush" Color="#9A9A9A" />
+        <SolidColorBrush x:Key="BorderBrush" Color="#D1D1D1" />
+        <SolidColorBrush x:Key="StrongBorderBrush" Color="#8A8A8A" />
+        <SolidColorBrush x:Key="AccentSubtleBrush" Color="#E7F2FA" />
+        <SolidColorBrush x:Key="AccentSubtleBorderBrush" Color="#B8D8EE" />
+        <SolidColorBrush x:Key="AccentSubtleTextBrush" Color="#17496A" />
+        <SolidColorBrush x:Key="SelectionBrush" Color="#B7DDF5" />
+        <SolidColorBrush x:Key="SuccessBrush" Color="#0F7B42" />
+        <SolidColorBrush x:Key="DangerBrush" Color="#C42B1C" />
+        <SolidColorBrush x:Key="DataGridAlternateBrush" Color="#F7F7F7" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

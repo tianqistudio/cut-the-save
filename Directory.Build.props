@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <ReleaseVersion Condition="'$(ReleaseVersion)' == ''">1.0.1</ReleaseVersion>
+    <Version>$(ReleaseVersion)</Version>
+    <AssemblyVersion>$(ReleaseVersion).0</AssemblyVersion>
+    <FileVersion>$(ReleaseVersion).0</FileVersion>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+</Project>

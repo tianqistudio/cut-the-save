@@ -1,0 +1,51 @@
+<Window x:Class="CutTheSave.App.AppearanceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Style="{DynamicResource {x:Type Window}}"
+        Title="外观"
+        Width="560"
+        Height="570"
+        MinWidth="520"
+        MinHeight="480"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="{DynamicResource PageBackgroundBrush}">
+    <Grid Margin="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="TitleText" FontSize="26" FontWeight="SemiBold" Text="外观" />
+        <TextBlock x:Name="HelpText" Grid.Row="1" Margin="0,8,0,20" Foreground="{DynamicResource SecondaryTextBrush}" TextWrapping="Wrap" />
+
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+        <Border Style="{DynamicResource CardBorderStyle}" Padding="22">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="ThemeLabel" FontWeight="SemiBold" />
+                <ComboBox x:Name="ThemeComboBox" Grid.Row="1" Margin="0,8,0,20" Height="36" SelectionChanged="Selection_Changed" />
+                <TextBlock x:Name="ColorModeLabel" Grid.Row="2" FontWeight="SemiBold" />
+                <ComboBox x:Name="ColorModeComboBox" Grid.Row="3" Margin="0,8,0,20" Height="36" SelectionChanged="Selection_Changed" />
+                <Border Grid.Row="4" Padding="14" Background="{DynamicResource AccentSubtleBrush}" BorderBrush="{DynamicResource AccentSubtleBorderBrush}" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                    <TextBlock x:Name="PreviewText" Foreground="{DynamicResource AccentSubtleTextBrush}" TextWrapping="Wrap" />
+                </Border>
+            </Grid>
+        </Border>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="3" Margin="0,20,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="CancelButton" Click="CancelButton_Click" Content="取消" IsCancel="True" />
+            <Button x:Name="ApplyButton" Click="ApplyButton_Click" Content="应用" IsDefault="True" Style="{DynamicResource AccentButtonStyle}" />
+        </StackPanel>
+    </Grid>
+</Window>

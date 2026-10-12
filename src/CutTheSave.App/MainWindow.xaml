@@ -1,0 +1,177 @@
+<Window x:Class="CutTheSave.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Style="{DynamicResource {x:Type Window}}"
+        Title="Cut the Save"
+        Width="1320"
+        Height="840"
+        MinWidth="720"
+        MinHeight="420"
+        KeyboardNavigation.TabNavigation="Continue"
+        KeyboardNavigation.ControlTabNavigation="Continue"
+        Background="{DynamicResource PageBackgroundBrush}">
+    <Grid x:Name="RootLayoutGrid" Margin="30" KeyboardNavigation.TabNavigation="Continue" UseLayoutRounding="True" SnapsToDevicePixels="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <TextBlock x:Name="TitleText" FontSize="30" FontWeight="SemiBold" Text="Cut the Save" />
+                <TextBlock x:Name="SubtitleText" Margin="0,5,20,0" FontSize="14" TextWrapping="Wrap" Text="Save Editor &amp; Steam Fix for Cut the Rope" />
+            </StackPanel>
+            <WrapPanel Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Left">
+                <Button x:Name="ReadmeButton" MinWidth="96" Click="ReadmeButton_Click" Content="README" ToolTip="查看中英双语使用说明" />
+                <Button x:Name="LanguageButton" MinWidth="96" Click="LanguageButton_Click" Content="语言" ToolTip="切换简体中文、繁體中文或 English" />
+                <Button x:Name="AppearanceButton" MinWidth="96" Click="AppearanceButton_Click" Content="外观" ToolTip="选择主题和深浅色模式" />
+                <Button x:Name="SupportButton" MinWidth="96" Click="SupportButton_Click" Content="支持包" ToolTip="生成不包含存档内容的脱敏诊断压缩包" />
+                <Button x:Name="UpdateButton" MinWidth="96" Click="UpdateButton_Click" Content="检查更新" ToolTip="检查已配置的签名更新源；没有配置时不会联网" />
+            </WrapPanel>
+        </Grid>
+
+        <Border x:Name="GuideBorder" Grid.Row="1" Margin="0,14,0,14" Padding="18" Style="{DynamicResource GuideBorderStyle}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Border Width="38" Height="38" Background="{DynamicResource PrimaryBrush}" CornerRadius="19">
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource PrimaryForegroundBrush}" Text="1" />
+                </Border>
+                <StackPanel Grid.Column="1" Margin="14,0">
+                    <TextBlock x:Name="GuideTitleText" FontSize="16" FontWeight="SemiBold" Text="第一次使用？按这 4 步完成" />
+                    <TextBlock x:Name="GuideText" Margin="0,5,0,0" Foreground="{DynamicResource AccentSubtleTextBrush}" Text="检测游戏和存档 → 打开并检查 → 修改内存数据 → 另存为或应用 60 FPS。程序不会自动覆盖原文件。" TextWrapping="Wrap" />
+                </StackPanel>
+                    <Button x:Name="GuideActionButton" Grid.Column="2" Click="DetectButton_Click" Content="开始检测" ToolTip="自动查找 Steam 游戏和默认存档位置" Style="{DynamicResource AccentButtonStyle}" />
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="SidebarColumn" Width="300" />
+                <ColumnDefinition x:Name="SidebarGap" Width="20" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <Border Padding="18" Style="{DynamicResource CardBorderStyle}">
+                        <StackPanel>
+                            <TextBlock x:Name="SaveCardTitle" FontSize="17" FontWeight="SemiBold" Text="存档" />
+                            <TextBlock x:Name="SaveCardHelp" Margin="0,6,0,14" Foreground="{DynamicResource SecondaryTextBrush}" Text="先检测默认位置；也可以手动选择文件。" TextWrapping="Wrap" />
+                            <Button x:Name="DetectButton" Click="DetectButton_Click" Content="自动检测" ToolTip="查找 Steam 安装位置和默认存档位置" />
+                            <Button x:Name="SelectGameButton" Click="SelectGameButton_Click" Content="选择游戏程序" ToolTip="自动检测不到时，手动选择 CutTheRopeApp.exe；不会启动或修改游戏">
+                                <Button.ContentTemplate><DataTemplate><TextBlock Text="{Binding}" TextWrapping="Wrap" TextAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" /></DataTemplate></Button.ContentTemplate>
+                            </Button>
+                            <Button x:Name="LaunchGameButton" Click="LaunchGameButton_Click" Content="通过 Steam 启动游戏" IsEnabled="False" ToolTip="通过 Steam 启动 AppID 223280；不会修改存档或 RTSS 设置" />
+                            <Button x:Name="OpenButton" Click="OpenButton_Click" Content="打开存档" ToolTip="手动选择 ctr_save.bin 文件；不会修改原文件" />
+                            <Button x:Name="SaveAsButton" Click="SaveAsButton_Click" Content="另存为" IsEnabled="False" ToolTip="将当前内存中的修改安全写入新文件，并保留备份" />
+                            <Button x:Name="RestoreOpenButton" Click="RestoreOpenButton_Click" Content="恢复打开时版本" IsEnabled="False" ToolTip="先备份当前文件，再恢复本次打开时的安全快照" />
+                            <Button x:Name="BackupsButton" Click="BackupsButton_Click" Content="备份" ToolTip="查看当前存档的历史安全备份，并在恢复前再次备份当前文件" />
+                            <TextBlock x:Name="DirtyText" Margin="0,12,0,0" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}" TextWrapping="Wrap" Visibility="Collapsed" AutomationProperties.LiveSetting="Polite" />
+                            <TextBlock x:Name="FilePathLabel" Margin="0,16,0,4" Foreground="{DynamicResource SecondaryTextBrush}" Text="当前路径" />
+                            <TextBlock x:Name="FilePathText" Foreground="{DynamicResource TextBrush}" Text="尚未打开文件" TextWrapping="Wrap" ToolTip="尚未打开文件" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Margin="0,16,0,0" Padding="18" Style="{DynamicResource CardBorderStyle}">
+                        <StackPanel>
+                            <TextBlock x:Name="RtssTitleText" FontSize="17" FontWeight="SemiBold" Text="速度修复" />
+                            <TextBlock x:Name="RtssHelpText" Margin="0,6,0,14" Foreground="{DynamicResource SecondaryTextBrush}" Text="只修改 Cut the Rope 的 Profile，不修改全局设置。" TextWrapping="Wrap" />
+                            <Button x:Name="DetectRtssButton" Click="DetectRtssButton_Click" Content="检测 RTSS" ToolTip="只读检查 RTSS 是否已安装；不会写入任何设置" />
+                            <Button x:Name="GetRtssButton" Click="GetRtssButton_Click" Content="获取 RTSS（官方页面）" ToolTip="打开 Guru3D 官方 RTSS 页面；程序不会下载或捆绑安装包" />
+                            <TextBlock x:Name="RtssStatusText" Margin="0,10,0,8" Foreground="{DynamicResource SecondaryTextBrush}" Text="尚未检测" TextWrapping="Wrap" />
+                            <TextBlock x:Name="RtssCompatibilityText" Margin="0,3,0,8" Foreground="{DynamicResource SecondaryTextBrush}" TextWrapping="Wrap" Visibility="Collapsed" />
+                            <TextBlock x:Name="RtssProfileStatusText" Margin="0,3,0,8" Foreground="{DynamicResource SecondaryTextBrush}" Text="Profile 尚未读取" TextWrapping="Wrap" />
+                            <Button x:Name="ReadRtssButton" Click="ReadRtssButton_Click" Content="读取 Profile" IsEnabled="False" ToolTip="只读显示 CutTheRopeApp.exe 的当前限制" />
+                            <Button x:Name="ApplyRtssButton" Click="ApplyRtssButton_Click" Content="应用 60 FPS" IsEnabled="False" ToolTip="仅在屏幕高于 60 Hz 时可用；写入前会备份" />
+                            <Button x:Name="UndoRtssButton" Click="UndoRtssButton_Click" Content="撤销修复" IsEnabled="False" ToolTip="恢复写入前的 RTSS Profile，或删除本次创建的 Profile" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Margin="0,16,0,0" Padding="18" Style="{DynamicResource CardBorderStyle}">
+                        <StackPanel>
+                            <TextBlock x:Name="BatchTitleText" FontSize="17" FontWeight="SemiBold" Text="批量操作" />
+                            <TextBlock x:Name="BatchHelpText" Margin="0,6,0,14" Foreground="{DynamicResource SecondaryTextBrush}" Text="只修改内存；点击另存为后才会写入。" TextWrapping="Wrap" />
+                            <Button x:Name="UnlockAllButton" Click="UnlockAllButton_Click" Content="全部解锁" IsEnabled="False" />
+                            <Button x:Name="StarsAllButton" Click="StarsAllButton_Click" Content="全部三星" IsEnabled="False" />
+                            <Button x:Name="ScoresAllButton" Click="ScoresAllButton_Click" Content="全部最高分" IsEnabled="False" />
+                            <Button x:Name="CompleteAllButton" Click="CompleteAllButton_Click" Content="标记全部完成" IsEnabled="False" ToolTip="只更新完成计数和最后章节，不修改关卡分数" />
+                            <Button x:Name="UndoMemoryButton" Click="UndoMemoryButton_Click" Content="撤销内存修改" IsEnabled="False" ToolTip="恢复到打开文件时的内存快照，不立即修改磁盘文件" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <Border Grid.Column="2" Padding="20" Style="{DynamicResource CardBorderStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="SummaryTitleText" FontSize="17" FontWeight="SemiBold" Text="存档摘要" />
+                    <Grid x:Name="SummaryCountsGrid" Grid.Row="1" Margin="0,14,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock x:Name="IntCountLabel" Foreground="{DynamicResource SecondaryTextBrush}" Text="整数条目" />
+                            <TextBlock x:Name="IntCountText" Margin="0,3,0,0" FontSize="23" FontWeight="SemiBold" Text="—" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock x:Name="StringCountLabel" Foreground="{DynamicResource SecondaryTextBrush}" Text="字符串条目" />
+                            <TextBlock x:Name="StringCountText" Margin="0,3,0,0" FontSize="23" FontWeight="SemiBold" Text="—" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock x:Name="ValidationLabel" Foreground="{DynamicResource SecondaryTextBrush}" Text="校验状态" />
+                            <TextBlock x:Name="ValidationText" Margin="0,3,0,0" FontSize="16" FontWeight="SemiBold" Text="未加载" />
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="2" Margin="0,18,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Name="EntriesTitleText" FontSize="16" FontWeight="SemiBold" Text="条目编辑" />
+                        <TabControl Grid.Row="1" Margin="0,12,0,0">
+                            <TabItem x:Name="EntriesTab" Header="原始条目">
+                                <DataGrid x:Name="EntriesGrid" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="False" HeadersVisibility="Column" CellEditEnding="EntriesGrid_CellEditEnding">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="类型" Binding="{Binding Kind}" IsReadOnly="True" Width="100" />
+                                        <DataGridTextColumn Header="Key" Binding="{Binding Key}" IsReadOnly="True" Width="*" />
+                                        <DataGridTextColumn Header="Value" Binding="{Binding Value, Mode=OneWay}" Width="2*" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
+                            <TabItem x:Name="LevelsTab" Header="关卡视图">
+                                <DataGrid x:Name="LevelsGrid" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="False" HeadersVisibility="Column" CellEditEnding="LevelsGrid_CellEditEnding">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Box" Binding="{Binding BoxNumber}" IsReadOnly="True" Width="70" />
+                                        <DataGridTextColumn Header="关卡" Binding="{Binding LevelNumber}" IsReadOnly="True" Width="70" />
+                                        <DataGridTextColumn Header="Unlocked" Binding="{Binding Unlocked, Mode=OneWay}" Width="110" />
+                                        <DataGridTextColumn Header="Stars" Binding="{Binding Stars, Mode=OneWay}" Width="90" />
+                                        <DataGridTextColumn Header="Score" Binding="{Binding Score, Mode=OneWay}" Width="110" />
+                                        <DataGridTextColumn Header="Changed" Binding="{Binding Changed}" IsReadOnly="True" Width="110" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <TextBlock x:Name="StatusText" AutomationProperties.LiveSetting="Polite" Grid.Row="3" Margin="0,16,0,0" Foreground="{DynamicResource SecondaryTextBrush}" Text="就绪。" TextWrapping="Wrap" />
+    </Grid>
+</Window>

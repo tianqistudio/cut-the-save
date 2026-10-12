@@ -1,0 +1,38 @@
+name: Cut the Save CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore locked dependencies
+        run: dotnet restore CutTheSave.sln --locked-mode
+
+      - name: Build Release
+        run: dotnet build CutTheSave.sln --configuration Release --no-restore
+
+      - name: Run core tests
+        run: dotnet run --project tests/CutTheSave.Core.Tests --configuration Release --no-build -- --isolated
+
+      - name: Run Windows infrastructure tests
+        run: dotnet run --project tests/CutTheSave.Infrastructure.Windows.Tests --configuration Release --no-build -- --isolated
+
+      - name: Run application smoke tests
+        run: dotnet run --project tests/CutTheSave.App.Tests --configuration Release --no-build -- --isolated
+
+      - name: Test release governance
+        run: python -B -m unittest discover -s tests -p "test_release_*.py"

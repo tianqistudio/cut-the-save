@@ -1,0 +1,25 @@
+<Window x:Class="CutTheSave.App.SaveRecoveryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Style="{DynamicResource {x:Type Window}}" Background="{DynamicResource PageBackgroundBrush}"
+        Width="820" Height="530" MinWidth="640" MinHeight="420" WindowStartupLocation="CenterOwner">
+    <Grid Margin="24">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <TextBlock x:Name="TitleText" FontSize="24" FontWeight="SemiBold"/>
+        <TextBlock x:Name="HelpText" Grid.Row="1" Margin="0,8,0,16" TextWrapping="Wrap" Foreground="{DynamicResource SecondaryTextBrush}"/>
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel>
+                <TextBlock x:Name="TargetText" TextWrapping="Wrap" FontWeight="SemiBold"/>
+                <TextBlock x:Name="StateText" Margin="0,12,0,8" TextWrapping="Wrap"/>
+                <TextBlock x:Name="EvidenceText" TextWrapping="Wrap" Foreground="{DynamicResource SecondaryTextBrush}"/>
+            </StackPanel>
+        </ScrollViewer>
+        <TextBlock x:Name="StatusText" Grid.Row="3" TextWrapping="Wrap" Margin="0,12,0,4"/>
+        <WrapPanel Grid.Row="4" HorizontalAlignment="Right">
+            <Button x:Name="RefreshButton" Click="RefreshButton_Click"/>
+            <Button x:Name="KeepButton" Click="KeepButton_Click"/>
+            <Button x:Name="RestoreButton" Click="RestoreButton_Click"/>
+            <Button x:Name="CloseButton" IsCancel="True" Click="CloseButton_Click"/>
+        </WrapPanel>
+    </Grid>
+</Window>
