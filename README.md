@@ -7,7 +7,7 @@ Cut the Save 是 Steam 版 *Cut the Rope* 的存档检查、编辑和高刷新�
 当前为待验收的开发候选；包校验、隔离测试和真实设备验收分别记录，构建成功不代表正式发布。更新信任和官方 RTSS 安装包元数据尚未配置。
 ### 快速使用
 
-从 [GitHub 预发布页面](https://github.com/tianqistudio/cut-the-save/releases/tag/v1.0.1-preview.20261013)下载安装包及 SHA-256 校验文件。Windows x64 安装版内置运行时，桌面和开始菜单快捷方式可分别选择；使用与构建步骤见[安装说明](docs/installer.md)。当前安装包未签名，尚未完成真实机器上的安装、升级和卸载验收。
+从 [GitHub 预发布页面](https://github.com/tianqistudio/cut-the-save/releases/tag/v1.0.2-preview.20261013)下载安装包及 SHA-256 校验文件。Windows x64 安装版内置运行时，桌面和开始菜单快捷方式可分别选择；使用与构建步骤见[安装说明](docs/installer.md)。当前安装包未签名，尚未完成真实机器上的安装、升级和卸载验收。
 
 1. 启动程序后选择语言。程序会读取 Windows 界面语言给出推荐，也可以在右上角随时切换。
 2. 启动后程序会先进行一次只读检测；也可以点击「自动检测」。如果找不到存档，再点击「打开存档」手动选择 `ctr_save.bin`。

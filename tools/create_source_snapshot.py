@@ -27,6 +27,9 @@ ROOT_FILES = (
     "RELEASE_CHECKLIST.md",
     "FIELD_ACCEPTANCE.md",
     "CutTheSave.update.ini.example",
+    "assets/icons/cut-the-save.png",
+    "assets/icons/cut-the-save-256.png",
+    "assets/icons/cut-the-save.ico",
 )
 ROOT_DIRECTORIES = (".github", "docs", "scripts", "src", "tests", "tools")
 EXCLUDED_PARTS = {"bin", "obj", "__pycache__", ".git", ".vs"}

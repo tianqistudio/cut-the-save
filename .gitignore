@@ -40,6 +40,11 @@
 !/installer/Maintenance.ps1
 !/installer/TOOLCHAIN.md
 !/tests/installer-maintenance.Tests.ps1
+!/assets/
+!/assets/icons/
+!/assets/icons/cut-the-save.png
+!/assets/icons/cut-the-save-256.png
+!/assets/icons/cut-the-save.ico
 
 # Local acceptance, generated output, user data and credentials stay local.
 /docs/completion-audit.md

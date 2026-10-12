@@ -6,10 +6,12 @@
     <AssemblyName>CutTheSave</AssemblyName>
     <RootNamespace>CutTheSave.App</RootNamespace>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ApplicationIcon>../../assets/icons/cut-the-save.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../CutTheSave.Core/CutTheSave.Core.csproj" />
     <ProjectReference Include="../CutTheSave.Infrastructure.Windows/CutTheSave.Infrastructure.Windows.csproj" />
     <EmbeddedResource Include="../../docs/guide.md" Link="guide.md" />
+    <Resource Include="../../assets/icons/cut-the-save.ico" Link="Assets/Icons/cut-the-save.ico" />
   </ItemGroup>
 </Project>

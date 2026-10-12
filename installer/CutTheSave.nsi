@@ -31,6 +31,13 @@ ShowInstDetails show
 ShowUninstDetails show
 BrandingText "tianqistudio"
 !define MUI_ABORTWARNING
+; makensis normally changes to this script's directory, including build-source/installer.
+; Callers using /NOCD can supply /DCTS_ICON=<absolute icon path> explicitly.
+!ifndef CTS_ICON
+!define CTS_ICON "..\assets\icons\cut-the-save.ico"
+!endif
+!define MUI_ICON "${CTS_ICON}"
+!define MUI_UNICON "${CTS_ICON}"
 !insertmacro MUI_PAGE_WELCOME
 Page custom ShortcutPage ShortcutPageLeave
 !insertmacro MUI_PAGE_INSTFILES

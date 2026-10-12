@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2 preview — 2026-10-13
+
+- Added a floppy-disk and cut-rope icon with a swipe accent, shared by the application, windows, installer and uninstaller.
+- Included the icon assets in source snapshots and installer build inputs.
+- This preview remains unsigned. Real-machine installation, upgrade and uninstall acceptance is pending; automatic updates remain disabled.
+
 ## Unreleased local optimizations — 2026-10-02
 
 - Index level entries once per projection or batch operation, preserving exact keys, first-duplicate behavior, unknown fields and serialization order. The index is rebuilt after each call so direct list edits cannot leave stale positions.

@@ -47,7 +47,7 @@ $payload = Join-Path $output 'payload'
 $sourceCommit = & git -C $project rev-parse HEAD
 if ($LASTEXITCODE -ne 0 -or $sourceCommit -notmatch '^[a-f0-9]{40}$') { throw 'Unable to identify the source commit.' }
 $sourceSnapshot = @()
-foreach ($relative in @('installer/CutTheSave.nsi', 'installer/Maintenance.ps1', 'scripts/Build-CutTheSaveInstaller.ps1', 'scripts/Publish-CutTheSave.ps1', 'docs/installer.md')) {
+foreach ($relative in @('installer/CutTheSave.nsi', 'installer/Maintenance.ps1', 'scripts/Build-CutTheSaveInstaller.ps1', 'scripts/Publish-CutTheSave.ps1', 'docs/installer.md', 'assets/icons/cut-the-save.ico')) {
     $source = Join-Path $project $relative
     $evidence = Join-Path $output "build-source/$relative"
     [IO.Directory]::CreateDirectory((Split-Path $evidence)) | Out-Null
