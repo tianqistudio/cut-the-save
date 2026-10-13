@@ -1,6 +1,7 @@
 # Source-only repository. New file types require explicit review before upload.
 *
 !/.gitignore
+!/.editorconfig
 !/.gitattributes
 !/CutTheSave.sln
 !/Directory.Build.props
