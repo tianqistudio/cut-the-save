@@ -25,3 +25,5 @@ pwsh -File scripts/Publish-CutTheSave.ps1 -RunUpdaterAcceptance
 Version defaults come from `Directory.Build.props`. `-ReleaseVersion` overrides the three-component version. Package checks read the actual ZIP, require every file hash and compare packaged assembly metadata with the release version. Updater tests use isolated signed fixtures; they do not enable production trust or exercise a production update publication.
 
 This is an overview, not the complete user manual. See the [three-language guide](docs/guide.md), [RTSS safety](docs/rtss-safety.md) and [field acceptance](FIELD_ACCEPTANCE.md).
+
+Made by [tianqistudio](https://tianqistudio.com/home).
