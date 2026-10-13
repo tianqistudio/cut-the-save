@@ -12,7 +12,9 @@ RTSS operations target only `CutTheRopeApp.exe`. The repair records its intent b
 
 The main toolbar wraps in smaller work areas. A persistent unsaved marker survives language changes. Detection, opening, saving and retention work run away from the UI thread, with duplicate actions and closing blocked while a transaction is active.
 
-## Build
+<a id="build"></a>
+
+## Development and tests
 
 Two [save examples](samples/README.md) include original/edited copies and SHA-256 checksums for inspecting parsing and edit differences.
 

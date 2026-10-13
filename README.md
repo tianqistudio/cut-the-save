@@ -4,7 +4,9 @@
 
 Cut the Save 是 Steam 版 *Cut the Rope* 的存档检查、编辑和高刷新率辅助工具，支持简体中文、繁體中文和 English。
 
-### 快速使用
+<a id="快速使用"></a>
+
+## 安装与使用
 
 从 [GitHub 预发布页面](https://github.com/tianqistudio/cut-the-save/releases/tag/v1.0.2-preview.20261013)下载安装包及 SHA-256 校验文件。Windows x64 安装版内置运行时，桌面和开始菜单快捷方式可分别选择；使用与构建步骤见[安装说明](docs/installer.md)。
 
@@ -20,7 +22,7 @@ Cut the Save 是 Steam 版 *Cut the Rope* 的存档检查、编辑和高刷新�
 
 有错误、重复键等未确认警告或无法识别进度字段的文件只读；无效编码、异常长度或未知尾部会停止打开，不会自动修补。覆盖会比对打开/确认时的文件版本，检测到外部变化则停止并保留编辑。写入异常会明确提示已恢复、当前文件保留或需人工检查，并列出恢复文件；请勿直接重试覆盖。
 
-### 备份管理
+## 备份管理
 
 仓库提供两组[存档示例](samples/README.md)，包含原始与编辑后副本及 SHA-256 校验清单，可用于检查解析、编辑差异和另存为流程。
 
@@ -32,7 +34,7 @@ Cut the Save 是 Steam 版 *Cut the Rope* 的存档检查、编辑和高刷新�
 
 保存中断后，进入「备份 → 处理中断保存」。可保留当前状态，或在游戏关闭且文件仍为已验证结果时恢复写入前内容；旧备份会锁定，恢复前也会备份当前结果。处理记录和未知残留保留，启动时不会自动覆盖存档。
 
-### 外观
+## 外观
 
 语言也可直接改 INI：[General] 段使用 Language=zh-CN、Language=zh-TW 或 Language=en-US，关闭程序后修改，重启生效；兼容 zhcn、zhtw、usen。无需操作语言选择器。
 
@@ -40,23 +42,25 @@ Cut the Save 是 Steam 版 *Cut the Rope* 的存档检查、编辑和高刷新�
 
 偏好与语言一起保存在 `%LOCALAPPDATA%\CutTheSave\CutTheSave.ini`，对应 `Theme=Windows11|Classic` 和 `ColorMode=System|Light|Dark`。切换语言会保留外观及已记住的存档位置。外观切换不会写入游戏存档或 RTSS Profile。
 
-### 速度修复
+## 速度修复
 
 「RTSS 获取引导」提供三语安装说明和版本检查。未知版本或文件哈希不符时停止自动 Profile 操作，并保留原设置与恢复记录；这不影响存档编辑。RTSS 通过官方页面下载安装。详见 [RTSS 安全边界](docs/rtss-safety.md)。
 
 程序会先读取主屏幕刷新率。屏幕为 `60 Hz` 时无需 RTSS 限制；高于 `60 Hz` 时，才建议检测 RTSS，并只为 `CutTheRopeApp.exe` 设置 `60 FPS`。应用和撤销时，Windows 会只为这一次 RTSS Profile 操作请求管理员权限；程序仍以普通权限运行。写入前会备份，写入后必须回读 `60/1`，必要时会启动 RTSS，未发生外部改动且记录完整时可以撤销。旧版记录、写入中断或 Profile 被再次修改时会保留证据并停止自动撤销，请勿删除备份和修复记录。
 
-### 支持包
+## 支持包
 
 如果需要请别人协助排查，可以点击程序右上角的「支持包」。它会生成一个脱敏 ZIP，包含版本、系统、配置状态以及 Steam / RTSS 检测摘要；默认不包含 `ctr_save.bin`，也不会上传任何内容。
 
-### 更新
+## 更新
 
 当前开发版未配置正式签名公钥和发布地址，因此更新保持离线。发布者必须在源码中固定公钥、标识、频道、HTTPS 主机和两个独立来源后重新构建；程序旁的 `CutTheSave.update.ini` 仅控制 `[Update] Enabled=true|false`，不能更换这些信任信息。见 [更新配置](UPDATE_CONFIGURATION.md)。
 
 已配置的发行版可在启动后后台检查，成功且无冲突的检查最多每 24 小时一次。一个来源失败仍检查另一个；签名或版本冲突不会安装，两个来源都不可用不影响存档编辑。下载并安装前询问确认，默认选择「否」。
 
-## 构建与验证
+<a id="构建与验证"></a>
+
+## 开发与测试
 
 需要 Windows x64、.NET 10 SDK 和 PowerShell 7。从项目根目录运行：
 
