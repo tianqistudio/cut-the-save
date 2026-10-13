@@ -77,3 +77,5 @@ pwsh -File scripts/Verify-CutTheSaveRelease.ps1 -Zip <候选.zip> -Checksums <�
 界面在较小工作区折行工具栏并压缩摘要；检测、打开、保存和保留维护期间会显示忙碌状态，暂时阻止重复操作和关闭。未保存修改持续显示在当前文件区域，切换语言不会重建草稿。
 
 完整三语说明见 [使用指南](docs/guide.md)，现场验收要求见 [FIELD_ACCEPTANCE.md](FIELD_ACCEPTANCE.md)。
+
+由 [tianqistudio](https://tianqistudio.com/home) 制作。
