@@ -4,9 +4,7 @@
 
 Cut the Save checks and edits Steam *Cut the Rope* saves and assists with high-refresh-rate speed issues. The interface supports Simplified Chinese, Traditional Chinese and English. Windows 11 is the default theme; Classic and system/light/dark preferences remain available.
 
-This is a development candidate, not a confirmed release. Local tests and package verification do not replace real-save, RTSS or Windows 10/11 field acceptance. Production update trust and official RTSS download metadata are not provisioned.
-
-Download the Windows x64 installer and SHA-256 checksum from the [preview release](https://github.com/tianqistudio/cut-the-save/releases/tag/v1.0.2-preview.20261013). The installer includes the runtime and save examples, with separate desktop and Start Menu shortcut options. It is unsigned; installation, upgrade and uninstallation on a real machine have not been validated. See the [installation guide](docs/installer.md).
+Download the Windows x64 installer and SHA-256 checksum from the [preview release](https://github.com/tianqistudio/cut-the-save/releases/tag/v1.0.2-preview.20261013). The installer includes the runtime and save examples, with separate desktop and Start Menu shortcut options. See the [installation guide](docs/installer.md).
 
 Open a save, inspect its validation status, edit the in-memory draft and use **Save as**. Unrecognized or warning-bearing saves remain read-only. Save and restore require the game to be closed. Backups are verified before recovery; unresolved or external changes stop automatic writes.
 

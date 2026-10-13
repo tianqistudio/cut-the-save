@@ -11,8 +11,6 @@
 
 先将示例复制到单独的测试目录，再在程序中选择「打开存档」。修改后使用「另存为」输出到新文件；保留示例和自己正在使用的游戏存档。完整性可与 [SHA-256 清单](SHA256SUMS.txt) 核对。
 
-示例曾用于早期版本的本地验证；收录这些文件不代表当前候选已完成真实游戏、设备或全部存档格式验收。
-
 ## English
 
-These two *Cut the Rope* save states include original and edited copies. Each file contains 845 integer entries and two string entries; each edited copy changes one existing level-unlock field. Copy the examples into a separate test directory before opening them, and use **Save as** for new output. Checksums are listed in [SHA256SUMS.txt](SHA256SUMS.txt). These historical examples do not establish field acceptance for the current candidate.
+These two *Cut the Rope* save states include original and edited copies. Each file contains 845 integer entries and two string entries; each edited copy changes one existing level-unlock field. Copy the examples into a separate test directory before opening them, and use **Save as** for new output. Checksums are listed in [SHA256SUMS.txt](SHA256SUMS.txt).
