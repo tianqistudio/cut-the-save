@@ -26,6 +26,7 @@ public partial class GameInstallationPickerWindow : Window
             CancelButton.Content = "取消";
             ConfirmButton.Content = "使用此位置";
         }
+        Title = TitleText.Text;
     }
 
     private void ConfirmButton_Click(object sender, RoutedEventArgs e)

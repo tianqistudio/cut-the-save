@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <ReleaseVersion Condition="'$(ReleaseVersion)' == ''">1.0.2</ReleaseVersion>
+    <ReleaseVersion Condition="'$(ReleaseVersion)' == ''">1.0.4</ReleaseVersion>
     <Version>$(ReleaseVersion)</Version>
     <AssemblyVersion>$(ReleaseVersion).0</AssemblyVersion>
     <FileVersion>$(ReleaseVersion).0</FileVersion>

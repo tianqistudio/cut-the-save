@@ -172,6 +172,9 @@
             </Border>
         </Grid>
 
-        <TextBlock x:Name="StatusText" AutomationProperties.LiveSetting="Polite" Grid.Row="3" Margin="0,16,0,0" Foreground="{DynamicResource SecondaryTextBrush}" Text="就绪。" TextWrapping="Wrap" />
+        <StackPanel Grid.Row="3" Margin="0,16,0,0">
+            <TextBlock x:Name="StatusText" AutomationProperties.LiveSetting="Polite" Foreground="{DynamicResource SecondaryTextBrush}" Text="就绪。" TextWrapping="Wrap" />
+            <TextBlock Margin="0,6,0,0"><Hyperlink Click="OpenCreator_Click">由 tianqistudio 制作。</Hyperlink></TextBlock>
+        </StackPanel>
     </Grid>
 </Window>

@@ -227,6 +227,34 @@ static void RunUiSmokeTest()
             Assert(picker.RecommendationText.Text.Contains("Recommended: Simplified Chinese (zh-CN)", StringComparison.Ordinal), "language picker distinguishes the system recommendation from the current UI language");
             picker.Close();
 
+            var installations = new[]
+            {
+                new GameInstallation("qa-library-a", "qa-game-a", "qa-a.exe"),
+                new GameInstallation("qa-library-b", "qa-game-b", "qa-b.exe")
+            };
+            foreach (var (language, expectedTitle) in new[]
+            {
+                (AppLanguage.ZhCn, "选择游戏位置"),
+                (AppLanguage.ZhTw, "選擇遊戲位置"),
+                (AppLanguage.EnUs, "Choose game location")
+            })
+            {
+                LocalizationService.UseLanguageForSession(language);
+                var gamePicker = new GameInstallationPickerWindow(installations);
+                Assert(gamePicker.Title == expectedTitle, "game picker title bar follows the active UI language");
+                Assert(gamePicker.CancelButton.IsCancel, "game picker registers the standard WPF Escape cancel action");
+                Assert(gamePicker.SelectedInstallation is null, "opening a game picker does not accept its default row");
+                gamePicker.Dispatcher.BeginInvoke(new Action(() => gamePicker.CancelButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent))));
+                Assert(gamePicker.ShowDialog() == false && gamePicker.SelectedInstallation is null, "canceling a multi-library picker returns no installation");
+            }
+            var confirmedGamePicker = new GameInstallationPickerWindow(installations);
+            confirmedGamePicker.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                confirmedGamePicker.InstallationsList.SelectedIndex = 1;
+                confirmedGamePicker.ConfirmButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            }));
+            Assert(confirmedGamePicker.ShowDialog() == true && confirmedGamePicker.SelectedInstallation == installations[1], "confirming a non-default Steam library returns that installation");
+
             var appearance = new AppearanceWindow();
             Assert(appearance.Title == "Choose appearance", "appearance picker follows the active UI language");
             Assert(appearance.ThemeComboBox.Items.Count == 2, "appearance picker exposes Windows 11 and Classic themes");

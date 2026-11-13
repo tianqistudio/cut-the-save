@@ -17,6 +17,12 @@ namespace CutTheSave.App;
 
 public partial class MainWindow : Window
 {
+    private void OpenCreator_Click(object sender, RoutedEventArgs e)
+    {
+        try { Process.Start(new ProcessStartInfo("https://tianqistudio.com/home") { UseShellExecute = true }); }
+        catch (Win32Exception) { MessageBox.Show("无法打开浏览器。请访问 https://tianqistudio.com/home"); }
+    }
+
     private readonly bool _suppressStartupDetection;
     private readonly SaveCodec _codec = new();
     private readonly SaveValidator _validator = new();

@@ -29,7 +29,7 @@ public static class LocalizationService
         ["ColorSystem"] = ["跟随系统", "跟隨系統", "Follow system"],
         ["ColorLight"] = ["浅色", "淺色", "Light"],
         ["ColorDark"] = ["深色", "深色", "Dark"],
-        ["AppearancePreview"] = ["选择：{0} · {1}\n点击应用后将显示为{2}。", "選擇：{0} · {1}\n按下套用後將顯示為{2}。", "Selected: {0} · {1}\nAfter Apply, the app will use {2} mode."],
+        ["AppearancePreview"] = ["选择：{0}，{1}\n点击应用后将显示为{2}。", "選擇：{0}，{1}\n按下套用後將顯示為{2}。", "Selected: {0}, {1}\nAfter Apply, the app will use {2} mode."],
         ["AppearanceSaveFailed"] = ["未能保存外观偏好，当前设置已保留。请确认配置目录可写后重试。", "無法儲存外觀偏好，目前設定已保留。請確認設定目錄可寫入後重試。", "Could not save the appearance preference. Your current settings are unchanged. Check that the settings folder is writable, then try again."],
         ["ApplyAppearance"] = ["应用", "套用", "Apply"],
         ["Cancel"] = ["取消", "取消", "Cancel"],
