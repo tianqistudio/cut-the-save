@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.5 preview — 2026-11-16
+
+- Normalize compiler source and debug paths so distribution files do not expose the developer's local workspace.
+- Check packaged assemblies, nested archives, debug metadata and extracted installer contents for private build paths before completing a release.
+- Add synthetic privacy regression cases to the release and CI checks.
+
 ## 1.0.2 preview — 2026-10-13
 
 - Added a floppy-disk and cut-rope icon with a swipe accent, shared by the application, windows, installer and uninstaller.
