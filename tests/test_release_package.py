@@ -37,6 +37,10 @@ class PackageValidationTests(unittest.TestCase):
         files['release-metadata.json'] = json.dumps({'schema_version':1,'version':'999.0.0' if case=='version' else ET.parse(ROOT/'Directory.Build.props').findtext('.//ReleaseVersion'),'runtime':'win-x64'}).encode()
         if case == 'missing-main': del files['CutTheSave.exe']
         if case == 'private': files['ctr_save.bin'] = b'fake save'
+        if case == 'private-pdb-path':
+            files['CutTheSave.Core.dll'] = b'MZRSDS' + b'\0' * 20 + b'C:/Users/private-builder/CutTheSave.Core.pdb\0'
+        if case == 'private-utf16-path':
+            files['details.txt'] = str(ROOT / 'private-build-file.cs').encode('utf-16-le')
         if case == 'traversal': files['../escape.txt'] = b'no'
         if case == 'duplicate-zip': files['cutthesave.EXE'] = b'duplicate'
         if case == 'collision': files['docs'] = b'file'; files['docs/x.md'] = b'child'
@@ -56,7 +60,7 @@ class PackageValidationTests(unittest.TestCase):
         result=self.verify('valid'); self.assertEqual(result.returncode,0,result.stdout+result.stderr)
 
     def test_invalid_archives(self):
-        for case in ['missing-main','missing-hash','duplicate-hash','wrong-hash','private','traversal','duplicate-zip','collision','version']:
+        for case in ['missing-main','missing-hash','duplicate-hash','wrong-hash','private','private-pdb-path','private-utf16-path','traversal','duplicate-zip','collision','version']:
             with self.subTest(case=case):
                 result=self.verify(case); self.assertNotEqual(result.returncode,0,result.stdout+result.stderr)
 

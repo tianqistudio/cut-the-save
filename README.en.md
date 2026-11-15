@@ -4,7 +4,7 @@
 
 Cut the Save checks and edits Steam *Cut the Rope* saves and assists with high-refresh-rate speed issues. The interface supports Simplified Chinese, Traditional Chinese and English. Windows 11 is the default theme; Classic and system/light/dark preferences remain available.
 
-Download the Windows x64 installer and SHA-256 checksum from the [preview release](https://github.com/tianqistudio/cut-the-save/releases/tag/v1.0.2-preview.20261013). The installer includes the runtime and save examples, with separate desktop and Start Menu shortcut options. See the [installation guide](docs/installer.md).
+Download the Windows x64 installer and SHA-256 checksum from the [preview release](https://github.com/tianqistudio/cut-the-save/releases/tag/v1.0.5-preview.20261116). The installer includes the runtime and save examples, with separate desktop and Start Menu shortcut options. See the [installation guide](docs/installer.md).
 
 Open a save, inspect its validation status, edit the in-memory draft and use **Save as**. Unrecognized or warning-bearing saves remain read-only. Save and restore require the game to be closed. Backups are verified before recovery; unresolved or external changes stop automatic writes.
 
@@ -18,13 +18,13 @@ The main toolbar wraps in smaller work areas. A persistent unsaved marker surviv
 
 Two [save examples](samples/README.md) include original/edited copies and SHA-256 checksums for inspecting parsing and edit differences.
 
-On Windows x64 with .NET 10 SDK and PowerShell 7:
+On Windows x64 with .NET 10 SDK, PowerShell 7 and Python 3.10 or later:
 
 ```powershell
 pwsh -File scripts/Publish-CutTheSave.ps1 -RunUpdaterAcceptance
 ```
 
-Version defaults come from `Directory.Build.props`. `-ReleaseVersion` overrides the three-component version. Package checks read the actual ZIP, require every file hash and compare packaged assembly metadata with the release version. Updater tests use isolated signed fixtures; they do not enable production trust or exercise a production update publication.
+Version defaults come from `Directory.Build.props`. `-ReleaseVersion` overrides the three-component version. Package checks read the actual ZIP, require every file hash and compare packaged assembly metadata with the release version. Static privacy checks reject private build paths in packaged content and debug metadata. Updater tests use isolated signed fixtures; they do not enable production trust or exercise a production update publication.
 
 This is an overview, not the complete user manual. See the [three-language guide](docs/guide.md), [RTSS safety](docs/rtss-safety.md) and [field acceptance](FIELD_ACCEPTANCE.md).
 

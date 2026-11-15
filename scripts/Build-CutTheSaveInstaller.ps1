@@ -47,7 +47,7 @@ $payload = Join-Path $output 'payload'
 $sourceCommit = & git -C $project rev-parse HEAD
 if ($LASTEXITCODE -ne 0 -or $sourceCommit -notmatch '^[a-f0-9]{40}$') { throw 'Unable to identify the source commit.' }
 $sourceSnapshot = @()
-foreach ($relative in @('installer/CutTheSave.nsi', 'installer/Maintenance.ps1', 'scripts/Build-CutTheSaveInstaller.ps1', 'scripts/Publish-CutTheSave.ps1', 'docs/installer.md', 'assets/icons/cut-the-save.ico')) {
+foreach ($relative in @('installer/CutTheSave.nsi', 'installer/Maintenance.ps1', 'scripts/Build-CutTheSaveInstaller.ps1', 'scripts/Publish-CutTheSave.ps1', 'docs/installer.md', 'assets/icons/cut-the-save.ico', 'Directory.Build.props', 'scripts/Verify-CutTheSaveRelease.ps1', 'tools/verify_release_privacy.py', 'tools/dotnet_static_payloads.py')) {
     $source = Join-Path $project $relative
     $evidence = Join-Path $output "build-source/$relative"
     [IO.Directory]::CreateDirectory((Split-Path $evidence)) | Out-Null
@@ -142,6 +142,16 @@ foreach ($source in $sourceSnapshot) {
         throw "Installer build source changed during compilation: $($source.path)"
     }
 }
+$privacyReport = Join-Path $output 'privacy-report.json'
+$privacyScanner = Join-Path $project 'tools/verify_release_privacy.py'
+$privacyArguments = @('-B', '-X', 'utf8', $privacyScanner, $exe, $inspection, '--owned-prefix', 'CutTheSave', '--forbid-prefix', $project, '--report', $privacyReport)
+if ($env:USERPROFILE) { $privacyArguments += @('--forbid-prefix', $env:USERPROFILE) }
+# Exact upstream apphost.pdb path from the verified .NET 10 Windows host templates.
+# Machine-prefix checks remain enforced even when this CodeView identity is allowed.
+$privacyArguments += @('--allow-codeview-fingerprint', 'fed8267010385db424a04f39dfb7dcf22c34a000dcfde21d05e19f2c6fa17598')
+$privacyArguments += @('--allow-codeview-fingerprint', '7ef97b960955ffa2b26e1c00f7f335335a69f15d34e2a4a269148777bdc804ac')
+& python @privacyArguments | Write-Host
+if ($LASTEXITCODE -ne 0) { throw 'Installer build-path privacy validation failed.' }
 $sha256 = (Get-FileHash -LiteralPath $exe).Hash.ToLowerInvariant()
 "$sha256  $([IO.Path]::GetFileName($exe))" | Set-Content -LiteralPath (Join-Path $output 'SHA256SUMS.txt') -Encoding utf8
 $report = [ordered]@{
@@ -150,6 +160,7 @@ $report = [ordered]@{
     compiler='NSIS 3.12'; compilerArchiveSha256=$compilerSha; runtimeLicenses=$licenseSources; dependencyLicenses=$dependencyLicenseSources
     sourceCommit=$sourceCommit; sourceSnapshot=$sourceSnapshot
     installerBuilt=$true; archiveIntegrityVerified=$true; embeddedPayloadFilesVerified=$expectedFiles.Count
+    contentPrivacyVerified=$true; privacyReportSha256=(Get-FileHash -LiteralPath $privacyReport).Hash.ToLowerInvariant()
     installerExecuted=$false; digitallySigned=((Get-AuthenticodeSignature -LiteralPath $exe).Status -eq 'Valid')
     status='development-candidate'; createdAtUtc=[DateTimeOffset]::UtcNow.ToString('o')
 }

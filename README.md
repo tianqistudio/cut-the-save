@@ -8,7 +8,7 @@ Cut the Save 是 Steam 版 *Cut the Rope* 的存档检查、编辑和高刷新�
 
 ## 安装与使用
 
-从 [GitHub 预发布页面](https://github.com/tianqistudio/cut-the-save/releases/tag/v1.0.2-preview.20261013)下载安装包及 SHA-256 校验文件。Windows x64 安装版内置运行时，桌面和开始菜单快捷方式可分别选择；使用与构建步骤见[安装说明](docs/installer.md)。
+从 [GitHub 预发布页面](https://github.com/tianqistudio/cut-the-save/releases/tag/v1.0.5-preview.20261116)下载安装包及 SHA-256 校验文件。Windows x64 安装版内置运行时，桌面和开始菜单快捷方式可分别选择；使用与构建步骤见[安装说明](docs/installer.md)。
 
 1. 启动程序后选择语言。程序会读取 Windows 界面语言给出推荐，也可以在右上角随时切换。
 2. 启动后程序会先进行一次只读检测；也可以点击「自动检测」。如果找不到存档，再点击「打开存档」手动选择 `ctr_save.bin`。
@@ -62,13 +62,13 @@ Cut the Save 是 Steam 版 *Cut the Rope* 的存档检查、编辑和高刷新�
 
 ## 开发与测试
 
-需要 Windows x64、.NET 10 SDK 和 PowerShell 7。从项目根目录运行：
+需要 Windows x64、.NET 10 SDK、PowerShell 7 和 Python 3.10 或更高版本。从项目根目录运行：
 
 ```powershell
 pwsh -File scripts/Publish-CutTheSave.ps1 -RunUpdaterAcceptance
 ```
 
-默认版本来自 `Directory.Build.props`；可用 `-ReleaseVersion 1.0.1` 显式指定三段版本。脚本构建隔离测试、发布便携程序，并生成 ZIP、完整 SHA-256 清单与包验证回执。`release-metadata.json` 的版本必须与包内程序集一致。仓库提供已核对的存档示例，不包含用户工作存档、用户 INI、发布索引和维护者现场回执。
+默认版本来自 `Directory.Build.props`；可用 `-ReleaseVersion 1.0.5` 显式指定三段版本。脚本构建隔离测试、发布便携程序，并生成 ZIP、完整 SHA-256 清单与包验证回执。`release-metadata.json` 的版本必须与包内程序集一致。 校验器还会静态检查 ZIP 内容和调试元数据，发现本机构建路径时拒绝交付。仓库提供已核对的存档示例，不包含用户工作存档、用户 INI、发布索引和维护者现场回执。
 
 更新器验收使用临时签名密钥与合成文件测试事务；正式程序保持固定信任，未配置时不会安装更新。
 

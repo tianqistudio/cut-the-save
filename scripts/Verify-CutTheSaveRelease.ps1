@@ -65,6 +65,20 @@ try {
         if ($assembly.Version -ne [version]($metadata.version + '.0')) { throw 'Packaged assembly/release version mismatch.' }
     } finally { $pe.Dispose(); $memory.Dispose() }
 } finally { $archive.Dispose() }
+$privacyScanner = Join-Path $repoRoot 'tools/verify_release_privacy.py'
+$privacyArguments = @('-B', '-X', 'utf8', $privacyScanner, $zipPath, '--owned-prefix', 'CutTheSave', '--forbid-prefix', $repoRoot)
+if ($env:USERPROFILE) { $privacyArguments += @('--forbid-prefix', $env:USERPROFILE) }
+# Exact upstream apphost.pdb path from the verified .NET 10 Windows host templates.
+# Machine-prefix checks remain enforced even when this CodeView identity is allowed.
+$privacyArguments += @('--allow-codeview-fingerprint', 'fed8267010385db424a04f39dfb7dcf22c34a000dcfde21d05e19f2c6fa17598')
+$privacyArguments += @('--allow-codeview-fingerprint', '7ef97b960955ffa2b26e1c00f7f335335a69f15d34e2a4a269148777bdc804ac')
+$privacyOutput = & python @privacyArguments
+if ($LASTEXITCODE -ne 0) {
+    $privacyOutput | Write-Host
+    throw 'Packaged content contains a private build path or could not be completely inspected.'
+}
+$privacy = ($privacyOutput -join [Environment]::NewLine) | ConvertFrom-Json
+if (-not $privacy.passed) { throw 'Packaged build-path privacy validation did not pass.' }
 if ($ReceiptPath) {
     if (-not $ReleaseId) { throw 'ReleaseId is required for a receipt.' }
     $root = [IO.Path]::GetFullPath((Join-Path $repoRoot 'releases/receipts')) + [IO.Path]::DirectorySeparatorChar
@@ -76,7 +90,8 @@ if ($ReceiptPath) {
         zip=@{path="artifacts/release/$zipName"; byte_size=(Get-Item -LiteralPath $zipPath).Length; sha256=$zipHash; entry_count=$files.Count}
         checksum_manifest=@{path="artifacts/release/$([IO.Path]::GetFileName($checksumPath))"; byte_size=(Get-Item -LiteralPath $checksumPath).Length; sha256=(Get-FileHash -LiteralPath $checksumPath).Hash.ToLowerInvariant()}
         validator=@{path='scripts/Verify-CutTheSaveRelease.ps1'; sha256=(Get-FileHash -LiteralPath $PSCommandPath).Hash.ToLowerInvariant()}
-        checks=@{required_files_present=$true; archive_name_privacy_scan_passed=$true; checksums_match_archive_entries=$true; complete_unique_inventory=$true; packaged_assembly_version_matches=$true}
+        checks=@{required_files_present=$true; archive_name_privacy_scan_passed=$true; archive_content_privacy_scan_passed=$true; checksums_match_archive_entries=$true; complete_unique_inventory=$true; packaged_assembly_version_matches=$true}
+        privacy_validator=@{path='tools/verify_release_privacy.py'; sha256=(Get-FileHash -LiteralPath $privacyScanner).Hash.ToLowerInvariant(); static_payload_reader_sha256=(Get-FileHash -LiteralPath (Join-Path $repoRoot 'tools/dotnet_static_payloads.py')).Hash.ToLowerInvariant(); result=$privacy}
         assets=$files.ToArray()
     }
     [IO.Directory]::CreateDirectory([IO.Path]::GetDirectoryName($receiptFullPath)) | Out-Null

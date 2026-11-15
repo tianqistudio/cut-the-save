@@ -43,6 +43,8 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'dotnet build failed.' }
 
     if (-not $SkipTests) {
+        python -B -X utf8 (Join-Path $repoRoot 'tools/test_release_privacy.py')
+        if ($LASTEXITCODE -ne 0) { throw 'Release privacy regression failed.' }
         $testProjects = @(
             'tests/CutTheSave.Core.Tests',
             'tests/CutTheSave.Infrastructure.Windows.Tests',
